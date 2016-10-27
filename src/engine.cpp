@@ -149,6 +149,7 @@ namespace CAshley {
         _call_listeners(e, false);
         e->remove_components();
         _entities.erase(e);
+        e->_engine = NULL;
     }
 
     void Engine::_call_listeners(Entity * e, bool add) {

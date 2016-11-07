@@ -62,6 +62,7 @@ namespace CAshley {
             _active = 0;
             _allocated = 0;
             _next_id = 0;
+            _typesize = sizeof(T);
         }
 
         /**
@@ -154,11 +155,12 @@ namespace CAshley {
          * \return Pointer to the component.
          */
         T *get_block(unsigned int i) {
+
             if (!_id2idx.count(i)) {
                 CacheError e("Getting an unknown block.");
                 throw e;
             }
-            return &_cache[_id2idx[i]];
+            return _cache + _typesize * _id2idx[i];
         }
 
         /**
@@ -224,6 +226,10 @@ namespace CAshley {
          * together at heading.
          */
         T *_cache;
+        /**
+         * \brief This stores the size of the type. Needed to return a block.
+         */
+        unsigned int _typesize;
         /**
          * \brief This maps the UID of a component with his position on _cache.
          */

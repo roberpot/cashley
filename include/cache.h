@@ -27,7 +27,7 @@
 #include "exceptions.h"
 
 // TODO: Remove or rework?
-#define DEBUG_MSG(x)
+#define __CASHLEY_DEBUG_MSG(x)
 
 namespace CAshley {
 
@@ -119,7 +119,7 @@ namespace CAshley {
                 throw e;
             }
             if (_block_is_active(i)) {
-                DEBUG_MSG("WARNING! -> Block " << i << " already active.");
+                __CASHLEY_DEBUG_MSG("WARNING! -> Block " << i << " already active.");
                 return;
             }
             // Swap.
@@ -136,11 +136,11 @@ namespace CAshley {
         void block_deactivate(unsigned int i) {
             if (!_block_is_allocated(i)) {
                 CacheError e("Trying to free an unknown block.");
-                DEBUG_MSG("BLOCK " << i);
+                __CASHLEY_DEBUG_MSG("BLOCK " << i);
                 throw e;
             }
             if (!_block_is_active(i)) {
-                DEBUG_MSG("WARNING! -> Block " << i << " already inactive.");
+                __CASHLEY_DEBUG_MSG("WARNING! -> Block " << i << " already inactive.");
                 return;
             }
             _active--;

@@ -21,6 +21,7 @@
 #ifndef __CASHLEY_CACHE_H
 #define __CASHLEY_CACHE_H
 
+#include <iostream>
 #include <cstring>
 #include <map>
 
@@ -160,7 +161,7 @@ namespace CAshley {
                 CacheError e("Getting an unknown block.");
                 throw e;
             }
-            return _cache + _typesize * _id2idx[i];
+            return (T *)((char *)(_cache) + _typesize * _id2idx[i]);
         }
 
         /**
@@ -206,10 +207,10 @@ namespace CAshley {
             idx_j = _id2idx[j];
             // Swap blocks. We copy directly instead of call copy constructor
             // to prevent a call to destructor.
-            unsigned char *buffer = new unsigned char[sizeof(T)];
-            memcpy(buffer, &_cache[idx_i], sizeof(T));
-            memcpy(&_cache[idx_i], &_cache[idx_j], sizeof(T));
-            memcpy(&_cache[idx_j], buffer, sizeof(T));
+            unsigned char *buffer = new unsigned char[_typesize];
+            memcpy(buffer, &_cache[idx_i], _typesize);
+            memcpy(&_cache[idx_i], &_cache[idx_j], _typesize);
+            memcpy(&_cache[idx_j], buffer, _typesize);
             delete buffer;
             // Swap references.
             _idx2id[idx_i] = j;

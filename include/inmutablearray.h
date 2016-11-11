@@ -128,7 +128,7 @@ namespace CAshley {
         void _push_back(T t) {
             if (_size == _alloc_size) {
                 T * v = new T[INMUTABLE_ARRAY_INC + _alloc_size];
-                memcpy(v, _v, _alloc_size);
+                memcpy(v, _v, _alloc_size * sizeof(T));
                 delete _v;
                 _v = v;
                 _alloc_size += INMUTABLE_ARRAY_INC;
